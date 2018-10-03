@@ -8,7 +8,7 @@
   NSTimer *timer;
 }
 double subscriptionDuration = 0.01;
-FlutterMethodChannel* _channel;
+FlutterMethodChannel* __channel;
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
   NSLog(@"audioPlayerDidFinishPlaying");
@@ -22,7 +22,7 @@ FlutterMethodChannel* _channel;
                            @"current_position" : [currentTime stringValue],
                            };
   */
-  [_channel invokeMethod:@"audioPlayerDidFinishPlaying" arguments:status];
+  [__channel invokeMethod:@"audioPlayerDidFinishPlaying" arguments:status];
 
   if (timer != nil) {
     [timer invalidate];
@@ -41,7 +41,7 @@ FlutterMethodChannel* _channel;
                            };
   */
 
-  [_channel invokeMethod:@"updateRecorderProgress" arguments:status];
+  [__channel invokeMethod:@"updateRecorderProgress" arguments:status];
 }
 
 - (void)updateProgress:(NSTimer*) timer
@@ -64,7 +64,7 @@ FlutterMethodChannel* _channel;
                            };
   */
 
-  [_channel invokeMethod:@"updateProgress" arguments:status];
+  [__channel invokeMethod:@"updateProgress" arguments:status];
 }
 
 - (void)startRecorderTimer
@@ -95,7 +95,7 @@ FlutterMethodChannel* _channel;
             binaryMessenger:[registrar messenger]];
   FlutterSoundPlugin* instance = [[FlutterSoundPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
-  _channel = channel;
+  __channel = channel;
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
